@@ -30,6 +30,7 @@ jobs:
       - name: Build Application
         run: npm run build  
       - name: Deploy Application
-        run: |
-          pm2 stop all || true  # Stop any existing instance of the app (using pm2)
-          pm2 start npm --name "my-app" -- start  # Start the app using pm2
+    run: |
+    pm2 stop all || true  # Stop any existing apps
+    pm2 start npm --name "passwordgenerator" -- run dev --cwd "D:/MyProject/passwordgenerator"
+

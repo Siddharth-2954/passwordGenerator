@@ -1,0 +1,36 @@
+name: CI/CD Pipeline
+
+on:
+  push:
+    branches:
+      - main  # Trigger workflow on push to the main branch
+  pull_request:
+    branches:
+      - main  # Trigger on pull requests to the main branch
+
+jobs:
+  build-and-deploy:
+    runs-on: self-hosted  # Use your local runner
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3  # This step checks out your repository
+
+      - name: Set up Node.js environment
+        uses: actions/setup-node@v3
+        with:
+          node-version: '16'  # Specify the Node.js version
+
+      - name: Install dependencies
+        run: npm install  # Installs dependencies defined in package.json
+
+      - name: Run tests
+        run: npm test  # Runs the tests defined in your project (if any)
+
+      - name: Build application
+        run: npm run build  # Builds the app (used for React apps)
+
+      - name: Deploy application
+        run: |
+          pm2 stop all || true  # Stop any existing instance of the app (using pm2)
+          pm2 start npm --name "my-app" -- start  # Start the app using pm2 on your local server

@@ -31,7 +31,7 @@ jobs:
         run: npm run build  # Builds the app (used for React apps)
 
       - name: Deploy Application
-  run: |
-    pm2 stop all || true  # Stop any existing apps
+    run: |
+    pm2 stop all || true  
     pm2 start npm --name "passwordgenerator" -- run dev --cwd "D:/MyProject/passwordgenerator"
 
